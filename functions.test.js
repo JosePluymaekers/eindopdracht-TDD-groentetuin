@@ -1,3 +1,6 @@
+// do not edit
+
+
 const { getYieldForPlant, getYieldForCrop, getTotalYield } = require("./farm");
 
 describe("getYieldForPlant", () => {
