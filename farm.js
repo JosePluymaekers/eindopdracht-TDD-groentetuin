@@ -32,9 +32,15 @@ const getCostsForCrop = (input) => {
 return(input.costs * input.plantsPerCrop)
     }
 
+
+//revenue per crop = plants per crop * revenue
+const getRevenueForCrop = (input) => {
+    return(input.yield * input.revenue)
+        }
+
+
+
 // --------tot hier werkt het--------
-
-
 
 
 
@@ -43,4 +49,5 @@ module.exports = {
     getYieldForCrop,
     getTotalYield,
     getCostsForCrop,
+    getRevenueForCrop
 };
