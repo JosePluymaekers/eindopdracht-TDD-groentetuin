@@ -3,8 +3,6 @@ const getYieldForPlant = (input) => {
         return input.yield 
     };
 
-
-
 const getYieldForCrop = (input) => {
     return (getYieldForPlant(input.crop) * input.numCrops)
 };  
@@ -22,12 +20,10 @@ const getCostsForCrop = (input) => {
     return(input.costs * input.plantsPerCrop)
     };
 
-
 // 2 revenue per crop = plants per crop * revenue
 const getRevenueForCrop = (input) => {
     return(input.yield * input.revenue)
         };
-
 
 // 3 get Profit For Crop without factors = revenue per crop - costs per crop
 const getProfitForCrop = (input) => {
@@ -35,8 +31,6 @@ const getProfitForCrop = (input) => {
     const costsPerCrop = getCostsForCrop(input)
     return (revenuePerCrop - costsPerCrop)
     };
-
-
 
 // 4 get total profit without factors = profit per crop * number of crops
 const getTotalProfit = (input) => {
@@ -75,12 +69,29 @@ const getYieldForPlantWithFactors = (input, environmentFactors) => {
 
 };
 
-// total yield with factors
+// 10 total yield with factors
 const getTotalYieldWithFactors = (input, environmentFactors) => {
-    const numCrops = input.numCrops
-    return getYieldForPlantWithFactors(input, environmentFactors) * numCrops;
+    return getYieldForPlantWithFactors(input, environmentFactors) * input.numCrops;
 };    
 
+
+// 11 get Revenue For Crop with factors = plants per crop * revenue
+const getRevenueForCropWithFactors = (input, environmentFactors) => {
+    return(getTotalYieldWithFactors(input, environmentFactors) * input.revenue)
+        };
+
+        
+// 12 get profit For Crop with factors 
+const getProfitForCropWithFactors = (input, environmentFactors) => {
+    const revenuePerCrop = getRevenueForCropWithFactors(input, environmentFactors)
+    const costsPerCrop = getCostsForCrop(input)
+        return (revenuePerCrop - costsPerCrop)
+            };
+
+// 13 get total profit with factors 
+const getTotalProfitWithFactors = (input, environmentFactors) => {
+    return getProfitForCropWithFactors(input, environmentFactors) * input.numCrops
+            };
 
 
 module.exports = {
@@ -92,5 +103,8 @@ module.exports = {
     getProfitForCrop,
     getTotalProfit,
     getYieldForPlantWithFactors,
-    getTotalYieldWithFactors
+    getTotalYieldWithFactors,
+    getRevenueForCropWithFactors,
+    getProfitForCropWithFactors, 
+    getTotalProfitWithFactors
 };

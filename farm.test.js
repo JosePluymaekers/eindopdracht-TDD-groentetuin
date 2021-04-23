@@ -1,7 +1,8 @@
 // do not edit
 
 const { getYieldForPlant, getYieldForCrop, getTotalYield, getCostsForCrop, 
-    getRevenueForCrop, getProfitForCrop, getTotalProfit, getYieldForPlantWithFactors, getTotalYieldWithFactors} = require("./farm");
+    getRevenueForCrop, getProfitForCrop, getTotalProfit, getYieldForPlantWithFactors, 
+    getTotalYieldWithFactors, getRevenueForCropWithFactors, getProfitForCropWithFactors, getTotalProfitWithFactors} = require("./farm");
 
 describe("getYieldForPlant", () => {
     const corn = {
@@ -55,8 +56,6 @@ describe("getTotalYield", () => {
     });
 });
 
-
-
 // 1 costs per crop = costs * plants per crop
 describe("getCostsForCrop", () => {
     const corn = {
@@ -65,13 +64,10 @@ describe("getCostsForCrop", () => {
         costs: 1.5,
         plantsPerCrop: 100
     };
-
     test("Get costs per crop", () => {
         expect(getCostsForCrop(corn)).toBe(150);
     });
 });
-
-
 
 // 2 revenue per crop = yield * revenue
 describe("getRevenueForCrop", () => {
@@ -82,7 +78,6 @@ describe("getRevenueForCrop", () => {
         plantsPerCrop: 100,
         revenue: 10  //per kilo
     };
-
     test("Get revenue for crop with no environment factors", () => {
         expect(getRevenueForCrop(corn)).toBe(300);
     });
@@ -90,7 +85,6 @@ describe("getRevenueForCrop", () => {
 
 
 // 3 get Profit For Crop without factors = revenue per crop - costs per crop
-
 describe("getProfitForCrop", () => {
     const corn = {
         name: "corn",
@@ -99,7 +93,6 @@ describe("getProfitForCrop", () => {
         plantsPerCrop: 100,
         revenue: 10  //per kilo
     };
-
     test("Get profit for crop with no environment factors", () => {
         expect(getProfitForCrop(corn)).toBe(150);
     });
@@ -109,7 +102,6 @@ describe("getProfitForCrop", () => {
 
 
 // 4 get total profit without factors = profit per crop * number of crops
-
 describe("getTotalProfit", () => {
     const corn = {
         name: "corn",
@@ -119,13 +111,10 @@ describe("getTotalProfit", () => {
         revenue: 10,  //per kilo
         numCrops: 10,
     };
-
     test("Get total profit with no environment factors", () => {
         expect(getTotalProfit(corn)).toBe(1500); //150*10
     });
 });
-
-
 
 // 5 get yield for plant with factors
 //low sun factor
@@ -140,12 +129,10 @@ describe("getYieldForPlantWithFactors", () => {
             high: 50,
           },
         },
-      };
-      
+      };    
       const environmentFactors = {
         sun: "low",
       };
-
     test("Get yield for plant with low sun factor", () => {
         expect(getYieldForPlantWithFactors(corn, environmentFactors)).toBe(15);
     });
@@ -167,14 +154,12 @@ describe("getYieldForPlantWithFactors", () => {
               windy: -30,
               stormy: -60,
           }
-        },
-      };
-      
+        }
+      }; 
       const environmentFactors = {
         sun: "high",
         wind: "windy",
       };
-
     test("Get yield for plant with high sun and windy factor", () => {
         expect(getYieldForPlantWithFactors(corn, environmentFactors)).toBe(31.5);
     });
@@ -198,23 +183,49 @@ describe("getYieldForPlantWithFactors", () => {
               stormy: -60,
           }
         },
-      };
-      
+      };     
       const environmentFactors = {
         sun: "low",
         wind: "stormy",
       };
-
     test("Get yield for plant with low sun and stormy factor", () => {
         expect(getYieldForPlantWithFactors(corn, environmentFactors)).toBe(6);
     });
 });
 
-
-
-
 //low sun and stormy factor
 describe("getTotalYieldWithFactors", () => {
+    const corn = {
+        name: "corn",
+        yield: 30,
+        costs: 1.5,
+        plantsPerCrop: 100,
+        revenue: 10,  //per kilo
+        numCrops: 10,
+        factors: {
+          sun: {
+            low: -50,
+            medium: 0,
+            high: +50,
+          },
+          wind: {
+              windless: 0,
+              windy: -30,
+              stormy: -60,
+          }
+        },
+      };     
+      const environmentFactors = {
+        sun: "low",
+        wind: "stormy",
+      };
+    test("Get total yield with low sun and stormy factor", () => {
+        expect(getTotalYieldWithFactors(corn, environmentFactors)).toBe(60);
+    });
+});
+
+// 11 revenue for a crop low sun and stormy factor
+describe("getRevenueForCropWithFactors", () => {
     const corn = {
         name: "corn",
         yield: 30,
@@ -241,7 +252,73 @@ describe("getTotalYieldWithFactors", () => {
         wind: "stormy",
       };
 
-    test("Get total yield with low sun and stormy factor", () => {
-        expect(getTotalYieldWithFactors(corn, environmentFactors)).toBe(60);
+    test("Get revenue for crop with low sun and stormy factor", () => {
+        expect(getRevenueForCropWithFactors(corn, environmentFactors)).toBe(600);
+    });
+});
+
+
+// 12 get profit For Crop with factors with low sun and stormy factor
+describe("getProfitForCropWithFactors", () => {
+    const corn = {
+        name: "corn",
+        yield: 30,
+        costs: 1.5,
+        plantsPerCrop: 100,
+        revenue: 10,  //per kilo
+        numCrops: 10,
+        factors: {
+          sun: {
+            low: -50,
+            medium: 0,
+            high: +50,
+          },
+          wind: {
+              windless: 0,
+              windy: -30,
+              stormy: -60,
+          }
+        },
+      };
+      
+      const environmentFactors = {
+        sun: "low",
+        wind: "stormy",
+      };
+
+    test("Get profit for crop with low sun and stormy factor", () => {
+        expect(getProfitForCropWithFactors(corn, environmentFactors)).toBe(450);
+    });
+});
+
+
+// 13 get total profit with factors with low sun and stormy factor
+describe("getTotalProfitWithFactors", () => {
+    const corn = {
+        name: "corn",
+        yield: 30,
+        costs: 1.5,
+        plantsPerCrop: 100,
+        revenue: 10,  //per kilo
+        numCrops: 10,
+        factors: {
+          sun: {
+            low: -50,
+            medium: 0,
+            high: +50,
+          },
+          wind: {
+              windless: 0,
+              windy: -30,
+              stormy: -60,
+          }
+        },
+      };   
+      const environmentFactors = {
+        sun: "low",
+        wind: "stormy",
+      };
+    test("Get total profit with low sun and stormy factor", () => {
+        expect(getTotalProfitWithFactors(corn, environmentFactors)).toBe(4500);
     });
 });
