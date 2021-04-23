@@ -1,23 +1,38 @@
-const getYieldForPlant = (yieldForPlant) => {
-    const corn = {
-        name: "corn",
-        yield: 30,
-    };
-    return yieldForPlant.yield
+const getYieldForPlant = (input) => {
+    // const corn = {
+    //     name: "corn",
+    //     yield: 30,
+    // };
+    return input.yield
 }
 
 
-const getYieldForCrop = (yieldForCrop) => {
-    const corn = {
-        name: "corn",
-        yield: 3,
-    };
-    const input = {
-        crop: corn,
-        numCrops: 10,
-    };
-    return (corn.yield * input.numCrops)
+const getYieldForCrop = (input) => {
+    // const corn = {
+    //     name: "corn",
+    //     yield: 3,
+    // };
+    // const input = {
+    //     crop: corn,
+    //     numCrops: 10,
+    // };
+    return (getYieldForPlant(input.crop) * input.numCrops)
 }
+
+const getTotalYield = ({crops}) => {
+    let total = 0;
+    crops.forEach(crop => {
+        total += getYieldForCrop(crop)
+    });
+    return total;
+};
+
+
+const getCostsForCrop = (input) => {
+return(input.costs * input.plantsPerCrop)
+    }
+
+// --------tot hier werkt het--------
 
 
 
@@ -26,4 +41,6 @@ const getYieldForCrop = (yieldForCrop) => {
 module.exports = {
     getYieldForPlant,
     getYieldForCrop,
+    getTotalYield,
+    getCostsForCrop,
 };
