@@ -75,9 +75,11 @@ const getYieldForPlantWithFactors = (input, environmentFactors) => {
 
 };
 
-
-    
-
+// total yield with factors
+const getTotalYieldWithFactors = (input, environmentFactors) => {
+    const numCrops = input.numCrops
+    return getYieldForPlantWithFactors(input, environmentFactors) * numCrops;
+};    
 
 
 
@@ -89,5 +91,6 @@ module.exports = {
     getRevenueForCrop,
     getProfitForCrop,
     getTotalProfit,
-    getYieldForPlantWithFactors
+    getYieldForPlantWithFactors,
+    getTotalYieldWithFactors
 };

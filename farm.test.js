@@ -1,6 +1,7 @@
 // do not edit
 
-const { getYieldForPlant, getYieldForCrop, getTotalYield, getCostsForCrop, getRevenueForCrop, getProfitForCrop, getTotalProfit, getYieldForPlantWithFactors } = require("./farm");
+const { getYieldForPlant, getYieldForCrop, getTotalYield, getCostsForCrop, 
+    getRevenueForCrop, getProfitForCrop, getTotalProfit, getYieldForPlantWithFactors, getTotalYieldWithFactors} = require("./farm");
 
 describe("getYieldForPlant", () => {
     const corn = {
@@ -206,5 +207,41 @@ describe("getYieldForPlantWithFactors", () => {
 
     test("Get yield for plant with low sun and stormy factor", () => {
         expect(getYieldForPlantWithFactors(corn, environmentFactors)).toBe(6);
+    });
+});
+
+
+
+
+//low sun and stormy factor
+describe("getTotalYieldWithFactors", () => {
+    const corn = {
+        name: "corn",
+        yield: 30,
+        costs: 1.5,
+        plantsPerCrop: 100,
+        revenue: 10,  //per kilo
+        numCrops: 10,
+        factors: {
+          sun: {
+            low: -50,
+            medium: 0,
+            high: +50,
+          },
+          wind: {
+              windless: 0,
+              windy: -30,
+              stormy: -60,
+          }
+        },
+      };
+      
+      const environmentFactors = {
+        sun: "low",
+        wind: "stormy",
+      };
+
+    test("Get total yield with low sun and stormy factor", () => {
+        expect(getTotalYieldWithFactors(corn, environmentFactors)).toBe(60);
     });
 });
