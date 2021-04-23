@@ -1,6 +1,6 @@
 // do not edit
 
-const { getYieldForPlant, getYieldForCrop, getTotalYield, getCostsForCrop, getRevenueForCrop } = require("./farm");
+const { getYieldForPlant, getYieldForCrop, getTotalYield, getCostsForCrop, getRevenueForCrop, getProfitForCrop } = require("./farm");
 
 describe("getYieldForPlant", () => {
     const corn = {
@@ -61,12 +61,12 @@ describe("getCostsForCrop", () => {
     const corn = {
         name: "corn",
         yield: 30,
-        costs: 15,
-        plantsPerCrop: 230
+        costs: 1.5,
+        plantsPerCrop: 100
     };
 
     test("Get costs per crop", () => {
-        expect(getCostsForCrop(corn)).toBe(3450);
+        expect(getCostsForCrop(corn)).toBe(150);
     });
 });
 
@@ -77,12 +77,29 @@ describe("getRevenueForCrop", () => {
     const corn = {
         name: "corn",
         yield: 30,
-        costs: 15,
-        plantsPerCrop: 230,
-        revenue: 25  //per kilo
+        costs: 1.5,
+        plantsPerCrop: 100,
+        revenue: 10  //per kilo
     };
 
     test("Get revenue for crop with no environment factors", () => {
-        expect(getRevenueForCrop(corn)).toBe(750);
+        expect(getRevenueForCrop(corn)).toBe(300);
+    });
+});
+
+
+//get Profit For Crop without factors = revenue per crop - costs per crop
+
+describe("getProfitForCrop", () => {
+    const corn = {
+        name: "corn",
+        yield: 30,
+        costs: 1.5,
+        plantsPerCrop: 100,
+        revenue: 10  //per kilo
+    };
+
+    test("Get profit for crop with no environment factors", () => {
+        expect(getProfitForCrop(corn)).toBe(150);
     });
 });
